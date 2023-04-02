@@ -17,7 +17,7 @@ def query(request):
     image_response = ImageQuery(user_query).image_url
     summary_response = SummaryQuery(user_query)
     result = {
-        "image": [image_response],
+        "images": [image_response],
         "message": summary_response.message,
         "suggestions": summary_response.suggestions
     }

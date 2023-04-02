@@ -1,5 +1,7 @@
 Django~=4.1.7
-requests~=2.28.1
-spacy~=3.4.4
-setuptools~=65.6.3
-textstat~=0.7.3
+requests~=2.28.2
+spacy~=3.5.1
+djangorestframework~=3.14.0
+langchain~=0.0.129
+setuptools~=65.5.1
+pandas~=1.5.3
