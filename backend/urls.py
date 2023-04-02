@@ -1,7 +1,7 @@
 from django.urls import path
 
-from backend import views
+from backend import routes
 
 urlpatterns = [
-    path('<str:query>', views.index, name='index')
+    path('<str:query>', routes.index, name='index')
 ]
