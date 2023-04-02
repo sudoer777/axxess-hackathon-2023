@@ -63,11 +63,19 @@ function App(this: any) {
     // Read the form data
     //const form = e.target;
     //const formData = new FormData(form);
-    console.log({query});
+    console.log(JSON.stringify({query}));
     //You can pass formData as a fetch body directly:
-    fetch('http://localhost:8000/api/v0/query', { method: 'POST', body: JSON.stringify({query}) }) //nEED TO HAVE IT so it changes based on response
+    fetch('http://localhost:8000/api/v0/query', {
+      method: 'POST',
+      body: JSON.stringify({query}),
+      headers: {
+        "Content-Type": "application/json"
+      }
+     }) //nEED TO HAVE IT so it changes based on response
           .then((res) => res.json())
           .then((json) => {
+            console.log(json)
+            setQuestionSuggestion(json.suggestions)
             setChatComponents([...chatComponent, (
               <div>
                 <span>{query}</span>

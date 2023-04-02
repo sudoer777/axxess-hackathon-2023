@@ -33,7 +33,7 @@ export const QuestionsButtons: React.FC<QuestionProps> = ({ questionSuggestion }
     <div>
       {questionSuggestion.map((Questions) => (
         //Generates the button & refreshes on click
-        <button key={Questions.id} onClick={handleRefreshClickSug}>{Questions.title}</button>
+        <button key={Questions.id} onClick={handleRefreshClickSug} className="space-x-4">{Questions.title}</button>
       ))}
     </div>
   );
