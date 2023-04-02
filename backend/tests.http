@@ -2,5 +2,5 @@ POST http://localhost:8000/api/v0/query
 Content-Type: application/json
 
 {
-  "query": "Tell me about depression"
+  "query": "Tell me about eyes"
 }
