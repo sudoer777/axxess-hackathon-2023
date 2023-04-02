@@ -21,8 +21,8 @@ function App(this: any) {
 
   return (
     <div className="App">
-      <div className="relative mb-4 flex flex-wrap max-w-fit w-screen">
-        <form onSubmit={handleSubmit}>
+      <div className="relative mb-4 flex flex-nowrap max-w-fit w-screen justify-center content-center py-8">
+        <form className="flex" onSubmit={handleSubmit}>
           <input
             type = 'text'
             onChange={(e) => setQuery(e.target.value)}
@@ -30,13 +30,16 @@ function App(this: any) {
           <input type='submit'/>
         </form>
       </div>      
-      <div className = "suggestions">
+      <div className = "flex justify-center ">
         <button>Suggestion 1</button>
         <button>Suggestion 2</button>
         <button>Suggestion 3</button>
       </div>
-        
       <div className = "response flex flex-wrap max-w-fit max-h-fit w-screen h-screen color:200">
+        
+      </div>
+      <div className = "response flex flex-wrap max-w-fit max-h-fit w-screen h-screen color:200">
+        <div className = "flex flex-wrap max-w-fit max-h-fit w-screen h-screen bg-gray-600 m-4"></div>
         <a target="_blank">
           <img className="logo" alt="Vite logo" />
         </a>
