@@ -65,18 +65,16 @@ function App(this: any) {
     //const formData = new FormData(form);
     console.log({query});
     //You can pass formData as a fetch body directly:
-    setChatComponents([...chatComponent, (
-      <div>
-        <span>{query}</span>
-        <div>{response?.[0]}</div>
-        <img src = {response?.[0]}/>
-      </div>)])
     fetch('/api/v0/query', { method: 'POST', body: query }) //nEED TO HAVE IT so it changes based on response
           .then((res) => res.json())
-          .then((json) => setResponse(json));
-    fetch('/api/v0/query1', { method: 'POST', body: query }) //nEED TO HAVE IT so it changes based on response
-          .then((res) => res.json())
-          .then((json) => setImages(json));
+          .then((json) => {
+            setChatComponents([...chatComponent, (
+              <div>
+                <span>{query}</span>
+                <div>{json.message}</div>
+                {json.images.map((image: string) => <img src = {image}/>)}
+              </div>)])
+          });
     // Or you can work with it as a plain object:
     //const formJson = Object.fromEntries(formData.entries());
     //console.log(formJson);
