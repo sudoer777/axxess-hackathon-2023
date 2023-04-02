@@ -1,8 +1,21 @@
+import React from 'react';
 import { useState } from 'react'
+import ReactDOM from 'react-dom';
 
+function response(query: { value: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, response1: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined, img: string | undefined) {
+  return (
+    <div>
+      <h1>{query.value}</h1>
+      <img src={img} alt="Loading"></img>
+      <p>{response1}</p>
+    </div>
+  );
+}
 
 function App(this: any) {
   const [query, setQuery] = useState("");
+  const [chatComponent, setChatComponents] = useState([<></>]);
+
   function handleSubmit(e: { preventDefault: () => void; target: any; }) {
     // Prevent the browser from reloading the page
     e.preventDefault();
@@ -12,11 +25,16 @@ function App(this: any) {
     //const formData = new FormData(form);
     console.log({query});
     //You can pass formData as a fetch body directly:
+    setChatComponents([...chatComponent, (
+      <div>
+        <span>{query}</span>
+      </div>)])
     fetch('/api/v0/query', { method: 'POST', body: query });
 
     // Or you can work with it as a plain object:
     //const formJson = Object.fromEntries(formData.entries());
     //console.log(formJson);
+
   }
 
   return (
@@ -39,10 +57,7 @@ function App(this: any) {
         
       </div>
       <div className = "response flex flex-wrap max-w-fit max-h-fit w-screen h-screen color:200">
-        <div className = "flex flex-wrap max-w-fit max-h-fit w-screen h-screen bg-gray-600 m-4"></div>
-        <a target="_blank">
-          <img className="logo" alt="Vite logo" />
-        </a>
+        {chatComponent}
       </div>
     </div>
     
