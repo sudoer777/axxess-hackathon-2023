@@ -16,6 +16,7 @@ function App(this: any) {
   const [query, setQuery] = useState("");
   const [chatComponent, setChatComponents] = useState([<></>]);
   const [response, setResponse] = useState([]);
+  const [simages, setImages] = useState([]);
   function handleSubmit(e: { preventDefault: () => void; target: any; }) {
     // Prevent the browser from reloading the page
     e.preventDefault();
@@ -29,11 +30,14 @@ function App(this: any) {
       <div>
         <span>{query}</span>
         <div>{response?.[0]}</div>
+        <img src = {response?.[0]}/>
       </div>)])
     fetch('/api/v0/query', { method: 'POST', body: query }) //nEED TO HAVE IT so it changes based on response
           .then((res) => res.json())
           .then((json) => setResponse(json));
-    
+    fetch('/api/v0/query1', { method: 'POST', body: query }) //nEED TO HAVE IT so it changes based on response
+          .then((res) => res.json())
+          .then((json) => setImages(json));
     // Or you can work with it as a plain object:
     //const formJson = Object.fromEntries(formData.entries());
     //console.log(formJson);
