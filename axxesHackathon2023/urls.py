@@ -20,5 +20,5 @@ from backend import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('<str:id>', views.index, name='index'),
+    path('<str:query>', views.index, name='index'),
 ]
