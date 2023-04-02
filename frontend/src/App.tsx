@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useState } from 'react'
 import ReactDOM from 'react-dom';
 import Slideshow from './components/slideshow';
@@ -20,14 +20,11 @@ function response(query: { value: string | number | boolean | React.ReactElement
 function App(this: any) {
   // Array of Q&A Objects
   //Instantiates Question Array Object
-  const questionSuggestionConst = {
-    questionSuggestion: [
-      { title: 'Cabbage', id: 1 },
-      { title: 'Garlic', id: 2 },
-      { title: 'Apple', id: 3 },
-      { title: 'Turkey', id: 4},
-    ]
-};
+  const questionSuggestionConst =
+    [
+      'How does an eye work?',
+      'I want to learn about the functionality of hands.',
+    ];
   //Array of images
   //Instantiates images
   const images = [
@@ -50,24 +47,40 @@ function App(this: any) {
   ];
 
   const [query, setQuery] = useState('');
-  const [chatComponent, setChatComponents] = useState([<></>]);
+  const [chatComponents, setChatComponents] = useState([<></>]);
   const [response, setResponse] = useState([]);
   const [simages, setImages] = useState([]);
-  const [questionSuggestion, setQuestionSuggestion] = useState<QuestionProps>(questionSuggestionConst);
+  const [questionSuggestion, setQuestionSuggestion] = useState(questionSuggestionConst);
+  const [messagesEnd, setMessagesEnd] = useState<HTMLDivElement | null>(null)
 
+
+  function addToChat(component: any) {
+      setChatComponents([...chatComponents, ...component])
+        return component;
+  }
 
   function handleSubmit(e: { preventDefault: () => void; target: any; }) {
+      e.preventDefault();
+      submitQuery();
+  }
+  function submitQuery(q: string = query) {
+      setQuery('')
     // Prevent the browser from reloading the page
-    e.preventDefault();
 
     // Read the form data
     //const form = e.target;
     //const formData = new FormData(form);
-    console.log(JSON.stringify({query}));
+    console.log(JSON.stringify({q}));
+
+    const component = addToChat(
+        [<div className="self-end bg-red-50 py-4 px-6">
+            <span>{q}</span>
+        </div>]
+    )
     //You can pass formData as a fetch body directly:
     fetch('http://localhost:8000/api/v0/query', {
       method: 'POST',
-      body: JSON.stringify({query}),
+      body: JSON.stringify({query: q}),
       headers: {
         "Content-Type": "application/json"
       }
@@ -75,13 +88,13 @@ function App(this: any) {
           .then((res) => res.json())
           .then((json) => {
             console.log(json)
-            setQuestionSuggestion(json.suggestions)
-            setChatComponents([...chatComponent, (
-              <div>
-                <span>{query}</span>
+            json.suggestions && setQuestionSuggestion(json.suggestions)
+            addToChat(
+              [...component,
+                  <div className="flex flex-col">
                 <div>{json.message}</div>
                 {json.images.map((image: string) => <img src = {image}/>)}
-              </div>)])
+              </div>]);
           });
     // Or you can work with it as a plain object:
     //const formJson = Object.fromEntries(formData.entries());
@@ -89,35 +102,48 @@ function App(this: any) {
 
   }
 
-  return (
-    <div className="App">
-      <div className="relative mb-4 flex flex-nowrap max-w-fit w-screen justify-center content-center py-8">
-        <form className="flex" onSubmit={handleSubmit}>
-          <input
-            type = 'text'
-            onChange={(e) => setQuery(e.target.value)}
-            className="queryBar shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
-          <input type='submit'/>
-        </form>
-      </div>
-      <Slideshow images={images} />
+    useEffect(() => {
+        messagesEnd?.scrollIntoView({ behavior: "smooth" });
+    }, [chatComponents])
 
-      <div className = "justify-center grid grid-flow-row-dense grid-cols-3 grid-rows-3">
+  return (
+    <div className="App flex items-center flex-col h-screen w-screen">
+        <div className="flex flex-col items-center max-w-xl h-screen max-h-xl">
+            <div className = "overflow-scroll flex flex-col items-center h-screen max-w-fit w-full bg-grey">
+                {chatComponents}
+                <div style={{ float:"left", clear: "both" }}
+                     ref={(el) => { setMessagesEnd(el); }}>
+                </div>
+            </div>
+            <div className="relative mb-4 flex flex-col justify-center content-center py-8">
+                <QuestionsButtons questionSuggestion={questionSuggestion} clickHandler={submitQuery}/>
+                <form className="flex" onSubmit={handleSubmit}>
+                    <input
+                        type = 'text'
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        className="queryBar shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                    <input type='submit' disabled={!query}/>
+                </form>
+            </div>
+        </div>
+
+      {/*<Slideshow images={images} />*/}
+
+      {/*<div className = "justify-center grid grid-flow-row-dense grid-cols-3 grid-rows-3">
         <SuggestionBox></SuggestionBox>
         <QuestionsButtons questionSuggestion={questionSuggestion.questionSuggestion} />
         <button>Suggestion 1</button>
         <button>Suggestion 2</button>
         <button>Suggestion 3</button>
-      </div>
-      <div className = "response flex flex-wrap max-w-fit max-h-fit w-screen h-screen color:200">
-        
-      </div>
-      <div className = "response flex flex-wrap max-w-fit max-h-fit w-screen h-screen bg-gray">
-        {chatComponent}
-      </div>
+      </div>*/}
+      {/*<div className = "response flex flex-wrap max-w-fit max-h-fit w-screen h-screen color:200">
+
+      </div>*/}
+
     </div>
-    
-  
+
+
   )
 }
 
