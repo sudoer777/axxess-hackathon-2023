@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react'
 import ReactDOM from 'react-dom';
+import { Slideshow} from './components/slideshow';
+
 import QuestionsButtons, { QuestionProps, SuggestionBox } from './components/suggestion';
 
 function response(query: { value: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, response1: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined, img: string | undefined) {
@@ -13,8 +15,11 @@ function response(query: { value: string | number | boolean | React.ReactElement
   );
 }
 
+
+
 function App(this: any) {
   // Array of Q&A Objects
+  //Instantiates Question Array Object
   const questionSuggestionConst = {
     questionSuggestion: [
       { title: 'Cabbage', id: 1 },
@@ -23,6 +28,26 @@ function App(this: any) {
       { title: 'Turkey', id: 4},
     ]
 };
+  //Array of images
+  //Instantiates images
+  const images = [
+    {
+      url: 'https://source.unsplash.com/random/800x600',
+      alt: 'Image 1',
+    },
+    {
+      url: 'https://source.unsplash.com/random/800x600?nature',
+      alt: 'Image 2',
+    },
+    {
+      url: 'https://source.unsplash.com/random/800x600?water',
+      alt: 'Image 3',
+    },
+    {
+      url: 'https://source.unsplash.com/random/800x600?mountain',
+      alt: 'Image 4',
+    },
+  ];
 
   const [query, setQuery] = useState("");
   const [chatComponent, setChatComponents] = useState([<></>]);
@@ -66,7 +91,9 @@ function App(this: any) {
             className="queryBar shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
           <input type='submit'/>
         </form>
-      </div>      
+      </div>
+      <Slideshow images={images} />     
+      
       <div className = "justify-center grid grid-flow-row-dense grid-cols-3 grid-rows-3">
         <SuggestionBox></SuggestionBox>
         <QuestionsButtons questionSuggestion={questionSuggestion.questionSuggestion} />
@@ -77,7 +104,7 @@ function App(this: any) {
       <div className = "response flex flex-wrap max-w-fit max-h-fit w-screen h-screen color:200">
         
       </div>
-      <div className = "response flex flex-wrap max-w-fit max-h-fit w-screen h-screen color:200">
+      <div className = "response flex flex-wrap max-w-fit max-h-fit w-screen h-screen bg-gray">
         {chatComponent}
       </div>
     </div>
