@@ -29,7 +29,8 @@ def get_suggestions(search_query):
                                                    fetch_k=10)  # gets a variety of other questions related to the query that the user can branch off to
     suggestion_questions = []
     for sug in suggestions:
-        suggestion_questions.append(sug.page_content)
+        content = sug.page_content
+        suggestion_questions.append(content.capitalize())
     return suggestion_questions
 
 
