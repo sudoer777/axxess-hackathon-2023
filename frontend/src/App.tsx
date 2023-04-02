@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react'
 import ReactDOM from 'react-dom';
+import QuestionsButtons, { QuestionProps, SuggestionBox } from './components/suggestion';
 
 function response(query: { value: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, response1: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined, img: string | undefined) {
   return (
@@ -13,10 +14,23 @@ function response(query: { value: string | number | boolean | React.ReactElement
 }
 
 function App(this: any) {
+  // Array of Q&A Objects
+  const questionSuggestionConst = {
+    questionSuggestion: [
+      { title: 'Cabbage', id: 1 },
+      { title: 'Garlic', id: 2 },
+      { title: 'Apple', id: 3 },
+      { title: 'Turkey', id: 4},
+    ]
+};
+
   const [query, setQuery] = useState("");
   const [chatComponent, setChatComponents] = useState([<></>]);
   const [response, setResponse] = useState([]);
   const [simages, setImages] = useState([]);
+  const [questionSuggestion, setQuestionSuggestion] = useState<QuestionProps>(questionSuggestionConst);
+
+
   function handleSubmit(e: { preventDefault: () => void; target: any; }) {
     // Prevent the browser from reloading the page
     e.preventDefault();
@@ -55,7 +69,9 @@ function App(this: any) {
           <input type='submit'/>
         </form>
       </div>      
-      <div className = "flex justify-center ">
+      <div className = "justify-center grid grid-flow-row-dense grid-cols-3 grid-rows-3">
+        <SuggestionBox></SuggestionBox>
+        <QuestionsButtons questionSuggestion={questionSuggestion.questionSuggestion} />
         <button>Suggestion 1</button>
         <button>Suggestion 2</button>
         <button>Suggestion 3</button>
