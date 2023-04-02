@@ -39,7 +39,7 @@ function App(this: any) {
     //const form = e.target;
     //const formData = new FormData(form);
     console.log({query});
-    //You can pass formData as a fetch body directly:
+    //This runs when a query from the text is inputted. It returns query, image, and response in a div at the bottom of the page
     fetch('/api/v0/query', { method: 'POST', body: query }) //nEED TO HAVE IT so it changes based on response
           .then((res) => res.json())
           .then((json) => {
@@ -59,6 +59,7 @@ function App(this: any) {
   return (
     <div className="App">
       <div className="relative mb-4 flex flex-nowrap max-w-fit w-screen justify-center content-center py-8">
+        //this is where the searchbar is
         <form className="flex" onSubmit={handleSubmit}>
           <input
             type = 'text'
@@ -66,7 +67,8 @@ function App(this: any) {
             className="queryBar shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
           <input type='submit'/>
         </form>
-      </div>      
+      </div>
+      //This is the portion for the buttons, they are formatted in a grid pattern
       <div className = "justify-center grid grid-flow-row-dense grid-cols-3 grid-rows-3">
         <SuggestionBox></SuggestionBox>
         <QuestionsButtons questionSuggestion={questionSuggestion.questionSuggestion} />
@@ -74,6 +76,7 @@ function App(this: any) {
         <button>Suggestion 2</button>
         <button>Suggestion 3</button>
       </div>
+      //This is the div where the response divs should appear
       <div className = "response flex flex-wrap max-w-fit max-h-fit w-screen h-screen color:200">
         
       </div>
