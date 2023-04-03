@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import { useState } from 'react'
 import ReactDOM from 'react-dom';
 import Slideshow from './components/slideshow';
-
 import QuestionsButtons, { QuestionProps, SuggestionBox } from './components/suggestion';
 
 function response(query: { value: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }, response1: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined, img: string | undefined) {
@@ -73,8 +72,8 @@ function App(this: any) {
     console.log(JSON.stringify({q}));
 
     const component = addToChat(
-        [<div className="self-end bg-red-50 py-4 px-6">
-            <span>{q}</span>
+        [<div className="flex self-end justify-items-center font-mono md:break-after-column bg-red-50 py-4 px-6">
+            <span className="justify-center">{q}</span>
         </div>]
     )
     //You can pass formData as a fetch body directly:
@@ -91,8 +90,8 @@ function App(this: any) {
             json.suggestions && setQuestionSuggestion(json.suggestions)
             addToChat(
               [...component,
-                  <div className="flex flex-col">
-                <div>{json.message}</div>
+                  <div className="flex bg-amber-400 flex-col">
+                <div className="">{json.message}</div> 
                 {json.images.map((image: string) => <img src = {image}/>)}
               </div>]);
           });
@@ -107,15 +106,15 @@ function App(this: any) {
     }, [chatComponents])
 
   return (
-    <div className="App flex items-center flex-col h-screen w-screen">
-        <div className="flex flex-col items-center max-w-xl h-screen max-h-xl">
-            <div className = "overflow-scroll flex flex-col items-center h-screen max-w-fit w-full bg-grey">
+    <div className="App bg-zinc-300 flex  items-center flex-col h-screen w-screen">
+        <div className="bg-amber-400 flex flex-col items-center max-w-xl h-screen max-h-xl">
+            <div className = " overflow-auto flex flex-col items-center h-screen max-w-xl w-xl bg-grey">
                 {chatComponents}
                 <div style={{ float:"left", clear: "both" }}
                      ref={(el) => { setMessagesEnd(el); }}>
                 </div>
             </div>
-            <div className="relative mb-4 flex flex-col justify-center content-center py-8">
+            <div className="relative bg-amber-500 mb-4 flex flex-col justify-center content-center py-8">
                 <QuestionsButtons questionSuggestion={questionSuggestion} clickHandler={submitQuery}/>
                 <form className="flex" onSubmit={handleSubmit}>
                     <input

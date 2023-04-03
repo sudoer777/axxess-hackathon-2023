@@ -30,7 +30,7 @@ export const QuestionsButtons: React.FC<QuestionProps> = ({ questionSuggestion, 
       };
   //Maps the Questions objects to buttons
   return (
-    <div className="flex flex-wrap">
+    <div className="flex bg-cyan-400 flex-wrap">
       {questionSuggestion.map((question) => (
         //Generates the button & refreshes on click
         <button onClick={() => {
