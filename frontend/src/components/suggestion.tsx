@@ -36,7 +36,7 @@ export const QuestionsButtons: React.FC<QuestionProps> = ({ questionSuggestion, 
         <button onClick={() => {
             handleRefreshClickSug()
             clickHandler(question)
-        }} className="px-4 py-3">{question}</button>
+        }} className="px-4 py-3 mx-auto my-2 border-dashed border-black border-2 rounded-lg ">{question}</button>
       ))}
     </div>
   );
