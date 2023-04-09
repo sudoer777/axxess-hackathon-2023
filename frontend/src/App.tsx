@@ -22,8 +22,12 @@ function App(this: any) {
   //Instantiates Question Array Object
   const questionSuggestionConst =
     [
-      'How does an eye work?',
-      'I want to learn about the functionality of hands.',
+        'Teach me something about histology',
+        'How does the body fight off diseases?',
+        'What are the different forms of genetic inheritance?',
+        'Teach me about genetics', 'Teach me about proteins',
+        'Teach me the circulatory system', 'Teach me the integumentary system',
+        'Teach me the endocrine system'
     ];
   //Array of images
   //Instantiates images
